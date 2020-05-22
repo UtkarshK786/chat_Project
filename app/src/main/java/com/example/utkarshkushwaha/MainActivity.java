@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
      static List<String> chatList;
      static RecyclerView recyclerView;
      static Context mContext;
+     static int i=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,17 +70,23 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("its working","yes");
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     for(DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()) {
+//                         if(String.valueOf(i).equals(dataSnapshot1.getKey()))
+//                          Log.i("required key:",dataSnapshot1.getKey());
                         for(DataSnapshot dataSnapshot3:dataSnapshot2.getChildren()) {
-                            Log.i(dataSnapshot3.getKey().toString(), dataSnapshot3.getValue().toString());
-                            chatList.add(dataSnapshot3.getValue().toString());
-                            senders.add(dataSnapshot3.getKey().toString());
-
+                            if(String.valueOf(i).equals(dataSnapshot2.getKey())) {
+                                Log.i("required key:", dataSnapshot2.getKey());
+                                Log.i(dataSnapshot3.getKey(), dataSnapshot3.getValue().toString());
+                                chatList.add(dataSnapshot3.getValue().toString());
+                                senders.add(dataSnapshot3.getKey());
+                                break;
+                            }
                             //   arrayAdapter.notifyDataSetChanged();
                         }
                     }
                 }
                 Log.i("chats",chatList.toString());
                 Log.i("senders",senders.toString());
+                i++;
 
         adapter= new chatAdapter(mContext,chatList,senders);
         recyclerView.setAdapter(adapter);
