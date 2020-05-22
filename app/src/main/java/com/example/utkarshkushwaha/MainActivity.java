@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,40 +25,44 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView listView;
-    DatabaseReference firebaseDatabase;
-    ArrayList<String> chats;
-    ArrayList<String> senders;
-    ArrayAdapter arrayAdapter;
-    chatAdapter adapter;
-    List<String> chatList;
-    RecyclerView recyclerView;
+    RelativeLayout relativeLayout;
+   static DatabaseReference firebaseDatabase;
+    static ArrayList<String> chats;
+    static ArrayList<String> senders;
+    static chatAdapter adapter;
+     static List<String> chatList;
+     static RecyclerView recyclerView;
+     static Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         firebaseDatabase=FirebaseDatabase.getInstance().getReference().child("123456");
-        // listView=findViewById(R.id.listView);
         chats=new ArrayList<String>();
         senders=new ArrayList<String>();
         chatList=new ArrayList<String>();
+        mContext=this;
+        relativeLayout=(RelativeLayout)findViewById(R.id.rel);
         recyclerView=findViewById(R.id.recyclerView);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("yes, it","is clicked indeed");
+                load_chats();
+
+                display_chats();
+            }
+        });
         recyclerView.setHasFixedSize(true);  //experiment with this please
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,chats);
-//        listView.setAdapter(arrayAdapter);
-        adapter= new chatAdapter(this,chatList,senders);
-        recyclerView.setAdapter(adapter);
-        load_chats();
-        display_chats();
     }
 
     public void display_chats(){
 
         Log.i("chats",chatList.toString());
     }
-    public void load_chats(){
-
+  static  public void load_chats(){
+  Log.i("it gets called","yes");
         firebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -71,10 +78,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-                adapter= new chatAdapter(MainActivity.this,chatList,senders);
-                recyclerView.setAdapter(adapter);
-//                Log.i("chats",chatList.toString());
-//                Log.i("senders",senders.toString());
+                Log.i("chats",chatList.toString());
+                Log.i("senders",senders.toString());
+
+        adapter= new chatAdapter(mContext,chatList,senders);
+        recyclerView.setAdapter(adapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -1,9 +1,11 @@
 package com.example.utkarshkushwaha;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -12,6 +14,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder>{
@@ -19,6 +24,10 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
     private Context context;
     private List<String> chatList;
     private List<String> sendersList;
+
+    public void setOnClickListener(){
+
+    }
 
     public chatAdapter(Context context,List<String> chatList, List<String> sendersList){
         this.context=context;
@@ -56,7 +65,6 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
     }
 
     class chatViewHolder extends RecyclerView.ViewHolder{
-
         ImageView imageView, imageView2;
         TextView textView3, textView4;
         RelativeLayout rel1,rel2;
@@ -69,6 +77,15 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
             imageView2=itemView.findViewById(R.id.imageView2);
             rel1=itemView.findViewById(R.id.rel1);
             rel2=itemView.findViewById(R.id.rel2);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity.load_chats();
+                    Log.d("Item","clicked");
+                }
+            });
 
         }
     }
