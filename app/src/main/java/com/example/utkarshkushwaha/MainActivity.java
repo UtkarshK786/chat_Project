@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
      static Context mContext;
      static int i=1;
      static List<String> imgs;
-    static int img_or_not=0;
+//    static int img_or_not=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                     chatList.add(dataSnapshot3.getValue().toString());
                                     senders.add(dataSnapshot3.getKey());
                                     imgs.add("");
-
-                                    adapter.notifyDataSetChanged();
+//                                    adapter.notifyDataSetChanged();
                                     break;
                                 }
                                 else{
@@ -107,11 +106,10 @@ public class MainActivity extends AppCompatActivity {
                                     for(DataSnapshot dataSnapshot4:dataSnapshot3.getChildren()){
                                         Log.i("Image sender",dataSnapshot4.getKey());
                                         Log.i("image url",dataSnapshot4.getValue().toString());
-                                        chatList.add("");
+                                        chatList.add("_imagz_");
                                         senders.add(dataSnapshot4.getKey());
                                         imgs.add(dataSnapshot4.getValue().toString());
-
-                                        adapter.notifyDataSetChanged();
+//                                        adapter.notifyDataSetChanged();
                                         break;
                                     }
                                 }
@@ -124,15 +122,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("senders",senders.toString());
                 Log.i("images",imgs.toString());
                 i++;
+//                    adapter.notifyDataSetChanged();
+//                    recyclerView.scheduleLayoutAnimation();
+                    adapter.notifyItemInserted(adapter.getItemCount());
 
-                adapter= new chatAdapter(mContext,chatList,senders,imgs);
-                recyclerView.setAdapter(adapter);
-
-                recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                recyclerView.scrollToPosition(adapter.getItemCount()-1);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
+
 }

@@ -50,14 +50,17 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
         chatViewHolder holder = null;
         View view = inflater.inflate(R.layout.chat_layout, null);
             holder = new chatViewHolder(view);
+            holder.setIsRecyclable(false);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final chatViewHolder holder, int position) {
-        String cht = chatList.get(position);
+        final String cht = chatList.get(position);
+        Log.i("value of chat is:",cht);
+        Log.i("position hai",String.valueOf(position));
         if (sendersList.get(position).equals("Harry")) {
-             if(chatList.get(position).equals("")){
+             if(cht.equals("_imagz_")){
                  String imag=imgs.get(position);
                  firebaseStorage = FirebaseStorage.getInstance();
                  final StorageReference storageReference = firebaseStorage.getReferenceFromUrl("gs://blushed-chat.appspot.com/Radhika:Harry/imgs/"+imag);
@@ -69,11 +72,9 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
                          public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                              Bitmap bitmap = decodeFile(file.getAbsolutePath());
                              holder.imageView.setImageBitmap(bitmap);
+                             holder.imageView.setVisibility(View.VISIBLE);
                              holder.textView3.setVisibility(View.GONE);
                              holder.rel2.setVisibility(View.VISIBLE);
-
-                             Log.i("Stroage reference", bitmap.toString());
-
                          }
                      });
 
@@ -81,13 +82,16 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
                      e.printStackTrace();
                  }
              }else {
-                 holder.textView3.setText(cht);
-                 holder.rel2.setVisibility(View.VISIBLE);
-                 holder.imageView.setVisibility(View.GONE);
-             }
 
+                 Log.i("Dekh la","set ka dele bani hum");
+                 holder.textView3.setText(cht);
+                 holder.textView3.setVisibility(View.VISIBLE);
+                 holder.rel2.setVisibility(View.VISIBLE);
+             }
+            holder.imageView.setVisibility(View.GONE);
+            holder.textView4.setVisibility(View.GONE);
         } else {
-            if(chatList.get(position).equals("")) {
+            if(cht.equals("_imagz_")) {
                 String imag = imgs.get(position);
                 firebaseStorage = FirebaseStorage.getInstance();
                 final StorageReference storageReference = firebaseStorage.getReferenceFromUrl("gs://blushed-chat.appspot.com/Radhika:Harry/imgs/" + imag);
@@ -99,22 +103,23 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             Bitmap bitmap = decodeFile(file.getAbsolutePath());
                             holder.imageView2.setImageBitmap(bitmap);
+                holder.imageView2.setVisibility(View.VISIBLE);
                             holder.textView4.setVisibility(View.GONE);
                             holder.rel1.setVisibility(View.VISIBLE);
-                            Log.i("Stroage reference", bitmap.toString());
-
                         }
                     });
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }else{
                     holder.textView4.setText(cht);
                     holder.imageView2.setVisibility(View.GONE);
-                holder.rel1.setVisibility(View.VISIBLE);
+                    holder.textView4.setVisibility(View.VISIBLE);
+                   holder.rel1.setVisibility(View.VISIBLE);
                 }
 
+            holder.imageView2.setVisibility(View.GONE);
+            holder.textView3.setVisibility(View.GONE);
         }
     }
 
