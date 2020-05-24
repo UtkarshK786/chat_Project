@@ -83,7 +83,6 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
                  }
              }else {
 
-                 Log.i("Dekh la","set ka dele bani hum");
                  holder.textView3.setText(cht);
                  holder.textView3.setVisibility(View.VISIBLE);
                  holder.rel2.setVisibility(View.VISIBLE);
@@ -103,7 +102,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             Bitmap bitmap = decodeFile(file.getAbsolutePath());
                             holder.imageView2.setImageBitmap(bitmap);
-                holder.imageView2.setVisibility(View.VISIBLE);
+                            holder.imageView2.setVisibility(View.VISIBLE);
                             holder.textView4.setVisibility(View.GONE);
                             holder.rel1.setVisibility(View.VISIBLE);
                         }
@@ -115,7 +114,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
                     holder.textView4.setText(cht);
                     holder.imageView2.setVisibility(View.GONE);
                     holder.textView4.setVisibility(View.VISIBLE);
-                   holder.rel1.setVisibility(View.VISIBLE);
+                    holder.rel1.setVisibility(View.VISIBLE);
                 }
 
             holder.imageView2.setVisibility(View.GONE);
@@ -148,7 +147,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.load_chats();
+                    MainActivity.load_chats(v);
                     Log.d("Item","clicked");
                 }
             });
