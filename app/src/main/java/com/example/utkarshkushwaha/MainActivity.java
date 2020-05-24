@@ -164,12 +164,6 @@ public  class  MainActivity extends AppCompatActivity {
         }
     }
 
-    public  static void check_connection(){
-        ConnectivityManager manager=(ConnectivityManager)mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork=manager.getActiveNetworkInfo();
-        if(activeNetwork==null){
-            Toast.makeText(mContext, "Please connect to the internet!", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
 }

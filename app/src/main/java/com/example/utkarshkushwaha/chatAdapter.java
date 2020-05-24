@@ -64,7 +64,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.chatViewHolder
                  String imag=imgs.get(position);
                  firebaseStorage = FirebaseStorage.getInstance();
                  final StorageReference storageReference = firebaseStorage.getReferenceFromUrl("gs://blushed-chat.appspot.com/Radhika:Harry/imgs/"+imag);
-                 Log.i("storage","gs://blushed-chat.appspot.com/Radhika:Harry/imgs/"+cht);
+                 Log.i("storage","gs://blushed-chat.appspot.com/Radhika:Harry/imgs/"+imag);
                  try {
                      final File file = File.createTempFile("image", "jpg");
                      storageReference.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
